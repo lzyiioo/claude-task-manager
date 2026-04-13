@@ -1,4 +1,4 @@
-.PHONY: build run install clean test
+.PHONY: build run install clean test build-all
 
 VERSION := $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
 BINARY := ctm
