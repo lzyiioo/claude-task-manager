@@ -1,0 +1,24 @@
+package config
+
+// DefaultConfigJSON contains the embedded default configuration
+const DefaultConfigJSON = `{
+  "isolation": {
+    "default": "tmux",
+    "dockerImage": "claude-code:latest"
+  },
+  "logging": {
+    "eventRetentionDays": 7,
+    "maxEventFileSizeMB": 100,
+    "logLevel": "info"
+  },
+  "permission": {
+    "autoAllowRead": true,
+    "autoAllowGlob": true,
+    "blockedCommands": ["rm -rf /", "sudo rm", "sudo rm -rf"]
+  },
+  "concurrency": {
+    "maxTasks": 5,
+    "maxCpuPercent": 80
+  }
+}
+`
