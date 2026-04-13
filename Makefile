@@ -4,7 +4,7 @@ VERSION := $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev
 BINARY := ctm
 
 build:
-	go build -ldflags "-X main.version=$(VERSION)" -o $(BINARY) ./cmd/main.go
+	GOPROXY=https://goproxy.cn,direct go build -ldflags "-X main.version=$(VERSION)" -o $(BINARY) ./cmd/...
 
 run:
 	go run ./cmd/main.go
