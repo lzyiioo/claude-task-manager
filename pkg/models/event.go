@@ -15,7 +15,8 @@ const (
 	EventPermission EventType = "permission"
 	EventMessage    EventType = "message"
 	EventError      EventType = "error"
-	EventStatus     EventType = "status" // task status change
+	EventStatus     EventType = "status"  // task status change
+	EventCleanup    EventType = "cleanup" // session cleanup
 )
 
 // Event represents a single event in the event stream
