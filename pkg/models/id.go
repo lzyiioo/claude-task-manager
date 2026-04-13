@@ -1,0 +1,8 @@
+// pkg/models/id.go
+package models
+
+import "github.com/google/uuid"
+
+func generateID() string {
+	return uuid.New().String()[:8]
+}
