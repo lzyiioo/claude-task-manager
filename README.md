@@ -6,271 +6,271 @@
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue?style=for-the-badge" alt="Platform">
 </p>
 
-> 终端多任务并行执行平台 | Terminal-based multi-task parallel execution platform for Claude Code
+> Terminal-based multi-task parallel execution platform for Claude Code
 
-**开发者**: 小梁子
-
----
-
-## 作用之处
-
-### 解决什么问题？
-
-| 场景 | 痛点 | CTM 解决方案 |
-|------|------|-------------|
-| **批量开发任务** | 手动一个个运行 Claude，效率低 | 并行批量执行，自动迭代 |
-| **多项目同时开发** | 切换窗口麻烦，容易混淆 | 独立隔离环境，互不干扰 |
-| **需要实时监控** | 不知道任务进度 | TUI 实时界面，一目了然 |
-| **权限审批繁琐** | 每个操作都要点 Yes | 自动批准，无需手动 |
-| **资源残留清理** | 进程/容器忘记关闭 | 自动清理，释放资源 |
-
-### 适用人群
-
-- 🤖 **AI 开发者** - 同时运行多个 Claude Code 实例
-- 📦 **DevOps 工程师** - 批量自动化任务
-- 🧪 **测试工程师** - 多场景并行测试
-- 🚀 **独立开发者** - 高效利用 AI 辅助编程
+**Developer**: 小梁子 (xiaoliangzi)
 
 ---
 
-## 功能特点
+## What is CTM?
 
-### 核心功能
+Claude Task Manager (CTM) is a powerful terminal-based platform for running multiple Claude Code instances in parallel. It provides real-time monitoring, permission control, batch automation, and automatic resource cleanup.
 
-| 功能 | 说明 | 状态 |
-|------|------|------|
-| 🔄 **多任务并行** | 同时运行多个 Claude Code 任务 | ✅ |
-| 🖥️ **TUI 界面** | Bubbletea 终端界面，实时监控 | ✅ |
-| 🛡️ **进程隔离** | tmux / Docker 两种隔离方式 | ✅ |
-| 🔐 **权限控制** | 实时审批 Claude 工具调用 | ✅ |
-| 📦 **批量执行** | 自动化批量运行，支持多轮迭代 | ✅ |
-| 📋 **事件日志** | JSONL 格式完整审计追踪 | ✅ |
-| 🧹 **自动清理** | 任务完成后自动释放资源 | ✅ |
+### Use Cases
 
-### 亮点特性
+| Scenario | Problem | CTM Solution |
+|----------|---------|--------------|
+| **Batch Development** | Running Claude manually one by one is inefficient | Parallel batch execution with auto-iteration |
+| **Multi-project Development** | Switching windows is messy, easy to get confused | Independent isolated environments |
+| **Real-time Monitoring** | No visibility into task progress | TUI interface with live status |
+| **Permission Approval** | Clicking Yes for every operation is tedious | Auto-approve, no manual interaction |
+| **Resource Cleanup** | Forgetting to close processes/containers | Automatic cleanup, resource release |
+
+### Target Users
+
+- 🤖 **AI Developers** - Running multiple Claude Code instances simultaneously
+- 📦 **DevOps Engineers** - Batch automation tasks
+- 🧪 **Test Engineers** - Multi-scenario parallel testing
+- 🚀 **Solo Developers** - Maximizing AI-assisted programming efficiency
+
+---
+
+## Features
+
+### Core Features
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| 🔄 **Parallel Tasks** | Run multiple Claude Code tasks simultaneously | ✅ |
+| 🖥️ **TUI Interface** | Bubbletea terminal UI with real-time monitoring | ✅ |
+| 🛡️ **Process Isolation** | tmux / Docker isolation modes | ✅ |
+| 🔐 **Permission Control** | Real-time approval for Claude tool calls | ✅ |
+| 📦 **Batch Execution** | Automated batch runs with multi-iteration support | ✅ |
+| 📋 **Event Logging** | JSONL format for complete audit trail | ✅ |
+| 🧹 **Auto Cleanup** | Automatic resource cleanup on task completion | ✅ |
+
+### Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     CTM 架构图                               │
+│                     CTM Architecture                         │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │              TUI 界面 (Bubbletea)                    │   │
-│  │     实时显示任务状态 │ 键盘快捷操作 │ 状态一目了然    │   │
+│  │              TUI Interface (Bubbletea)              │   │
+│  │   Real-time status │ Keyboard shortcuts │ Live view │   │
 │  └─────────────────────────────────────────────────────┘   │
 │                           │                                 │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │                   任务管理器                          │   │
-│  │    生命周期管理 │ 事件总线 │ 权限引擎                │   │
+│  │                   Task Manager                       │   │
+│  │    Lifecycle │ Event Bus │ Permission Engine        │   │
 │  └─────────────────────────────────────────────────────┘   │
 │           │                               │                 │
 │  ┌────────┴────────┐          ┌──────────┴──────────┐     │
-│  │   Claude 运行器  │          │    批量执行器       │     │
-│  │ Hook + 解析器    │          │  自动迭代 + 报告    │     │
-│  └─────────────────┘          └─────────────────────┘     │
+│  │ Claude Runner   │          │   Batch Executor    │     │
+│  │ Hook + Parser   │          │ Auto-iteration +    │     │
+│  └─────────────────┘          │      Reports        │     │
 │                           │                                 │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │                   隔离层                             │   │
+│  │                   Isolation Layer                   │   │
 │  │         ┌─────────┐        ┌─────────┐             │   │
 │  │         │  tmux   │        │ Docker  │             │   │
 │  │         └─────────┘        └─────────┘             │   │
 │  └─────────────────────────────────────────────────────┘   │
 │                           │                                 │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │                   存储层                             │   │
+│  │                   Storage Layer                      │   │
 │  │    ┌─────────────┐      ┌─────────────┐            │   │
 │  │    │  JSON       │      │  JSONL      │            │   │
-│  │    │ (任务持久化) │      │ (事件日志)  │            │   │
+│  │    │ (Tasks)     │      │ (Events)    │            │   │
 │  │    └─────────────┘      └─────────────┘            │   │
-│  └─────────────────────────────────────────────────────┘   │
+│  └─────────────────────────────────────────────────────────────┘
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 功能介绍
+## Documentation
 
-### 1. TUI 终端界面
+### 1. TUI Interface
 
 ```bash
-# 启动 TUI
+# Launch TUI
 ctm tui
 ```
 
-**功能**:
-- 任务列表实时显示
-- 任务状态一目了然 (pending/running/completed/failed)
-- 键盘快捷操作
+**Features**:
+- Real-time task list display
+- Task status at a glance (pending/running/completed/failed)
+- Keyboard shortcuts
 
-**快捷键**:
-| 按键 | 功能 |
-|------|------|
-| `j` / `↓` | 向下移动 |
-| `k` / `↑` | 向上移动 |
-| `n` | 新建任务 |
-| `s` | 停止选中任务 |
-| `r` | 刷新列表 |
-| `q` / `Ctrl+C` | 退出 |
+| Key | Action |
+|-----|--------|
+| `j` / `↓` | Move down |
+| `k` / `↑` | Move up |
+| `n` | New task |
+| `s` | Stop selected task |
+| `r` | Refresh list |
+| `q` / `Ctrl+C` | Exit |
 
-### 2. 批量执行
+### 2. Batch Execution
 
 ```bash
-# 基本用法 - 执行 10 次
-ctm batch run -p "实现用户登录功能" -n 10
+# Basic usage - run 10 iterations
+ctm batch run -p "Implement user login feature" -n 10
 
-# 从文件读取 prompt
+# Read prompt from file
 ctm batch run -f prompts.txt -n 5
 
-# 自动批准所有权限 (无需手动点 Yes)
-ctm batch run -p "重构代码" -n 10 --auto-permission
+# Auto-approve all permissions (no manual Yes)
+ctm batch run -p "Refactor code" -n 10 --auto-permission
 
-# 预览模式 (不实际执行)
-ctm batch run -p "测试功能" --dry-run
+# Dry run mode (don't actually execute)
+ctm batch run -p "Test feature" --dry-run
 
-# 指定工作目录
-ctm batch run -p "代码审查" -w /path/to/project -n 3
+# Specify working directory
+ctm batch run -p "Code review" -w /path/to/project -n 3
 ```
 
-**批量配置文件**:
+**Batch Config File**:
 ```yaml
 # batch-config.yaml
-iterations: 10              # 迭代次数
-prompt: "实现新功能"         # prompt 内容
-promptFile: ""              # 或从文件读取
-workDir: "."                # 工作目录
-permissionMode: "auto"      # 权限模式: ask/auto/auto-safe
-isolation: "tmux"           # 隔离方式: tmux/docker
-delayBetween: 5             # 每次执行间隔(秒)
-stopOnError: false          # 错误时停止
-onComplete: "commit"        # 完成动作: commit/push/none
+iterations: 10              # Number of iterations
+prompt: "Implement new feature"  # Prompt content
+promptFile: ""              # Or read from file
+workDir: "."                # Working directory
+permissionMode: "auto"      # Permission mode: ask/auto/auto-safe
+isolation: "tmux"           # Isolation: tmux/docker
+delayBetween: 5             # Delay between runs (seconds)
+stopOnError: false          # Stop on error
+onComplete: "commit"        # On complete action: commit/push/none
 ```
 
-### 3. 进程隔离
+### 3. Process Isolation
 
-| 模式 | 说明 | 适用场景 |
-|------|------|---------|
-| **tmux** | 轻量级终端复用 | 本地开发、快速测试 |
-| **Docker** | 容器级隔离 | 需要完全隔离环境 |
+| Mode | Description | Use Case |
+|------|-------------|----------|
+| **tmux** | Lightweight terminal multiplexing | Local dev, quick testing |
+| **Docker** | Container-level isolation | Complete environment isolation |
 
 ```bash
-# 使用 tmux 隔离 (默认)
-ctm batch run -p "任务" --isolation tmux
+# Use tmux isolation (default)
+ctm batch run -p "task" --isolation tmux
 
-# 使用 Docker 隔离
-ctm batch run -p "任务" --isolation docker
+# Use Docker isolation
+ctm batch run -p "task" --isolation docker
 ```
 
-### 4. 权限控制
+### 4. Permission Control
 
 ```bash
-# 手动审批模式 (默认)
-ctm batch run -p "任务" --permission-mode ask
+# Manual approval mode (default)
+ctm batch run -p "task" --permission-mode ask
 
-# 自动批准所有权限
-ctm batch run -p "任务" --permission-mode auto
+# Auto-approve all permissions
+ctm batch run -p "task" --permission-mode auto
 
-# 安全模式 - 读操作自动，写操作审批
-ctm batch run -p "任务" --permission-mode auto-safe
+# Safe mode - auto read, prompt write
+ctm batch run -p "task" --permission-mode auto-safe
 ```
 
-### 5. 自动清理
+### 5. Auto Cleanup
 
-**自动清理** (任务完成/失败/取消时自动触发):
-- 停止 tmux session 或 Docker 容器
-- 清理关联资源
-- 发送清理事件日志
+**Automatic cleanup** (triggered on task complete/fail/cancel):
+- Stop tmux session or Docker container
+- Clean up associated resources
+- Emit cleanup event log
 
-**手动清理**:
+**Manual cleanup**:
 ```bash
-# 清理所有资源
+# Cleanup all resources
 ctm cleanup
 
-# 清理指定任务
+# Cleanup specific task
 ctm cleanup -t <task-id>
 ```
 
-### 6. 事件日志
+### 6. Event Logging
 
-**存储位置**: `~/.ctm/events.jsonl`
+**Location**: `~/.ctm/events.jsonl`
 
-**事件类型**:
-| 类型 | 说明 |
-|------|------|
-| `status` | 任务状态变更 |
-| `tool_use` | Claude 工具调用 |
-| `tool_result` | 工具执行结果 |
-| `permission` | 权限请求 |
-| `cleanup` | 资源清理 |
+| Type | Description |
+|------|-------------|
+| `status` | Task status change |
+| `tool_use` | Claude tool call |
+| `tool_result` | Tool execution result |
+| `permission` | Permission request |
+| `cleanup` | Resource cleanup |
 
-**查看日志**:
+**View logs**:
 ```bash
-# 查看最近 20 条
+# View last 20 events
 tail -20 ~/.ctm/events.jsonl | jq .
 
-# 查看特定任务事件
+# View specific task events
 grep '"taskId":"task-xxx"' ~/.ctm/events.jsonl | jq .
 
-# 查看清理事件
+# View cleanup events
 grep '"type":"cleanup"' ~/.ctm/events.jsonl | jq .
 ```
 
 ---
 
-## 快速开始
+## Quick Start
 
-### 安装
+### Installation
 
 ```bash
-# 克隆仓库
+# Clone repository
 git clone https://github.com/lzyiioo/claude-task-manager.git
 cd claude-task-manager
 
-# 编译
+# Build
 go build -o ctm ./cmd/...
 
-# 或使用 Makefile
+# Or use Makefile
 make build
 
-# 添加到 PATH
+# Add to PATH
 # Linux/Mac:
 sudo mv ctm /usr/local/bin/
 # Windows:
-# 将 ctm.exe 移到 PATH 中的目录
+# Move ctm.exe to a directory in PATH
 ```
 
-### 依赖
+### Dependencies
 
-| 依赖 | 必需 | 说明 |
-|------|------|------|
-| Go 1.21+ | ✅ | 编译运行 |
-| tmux | 可选 | tmux 隔离模式 |
-| Docker | 可选 | Docker 隔离模式 |
+| Dependency | Required | Description |
+|------------|----------|-------------|
+| Go 1.21+ | ✅ | Build & run |
+| tmux | Optional | tmux isolation mode |
+| Docker | Optional | Docker isolation mode |
 
-### 使用示例
+### Usage Examples
 
 ```bash
-# 1. 启动 TUI 界面
+# 1. Launch TUI interface
 ctm tui
 
-# 2. 批量执行任务
-ctm batch run -p "实现一个计算器功能" -n 5 --auto-permission
+# 2. Batch execute tasks
+ctm batch run -p "Implement a calculator app" -n 5 --auto-permission
 
-# 3. 查看任务列表
+# 3. View task list
 ctm task list
 
-# 4. 查看事件日志
+# 4. View event logs
 tail -f ~/.ctm/events.jsonl
 
-# 5. 清理资源
+# 5. Cleanup resources
 ctm cleanup
 ```
 
 ---
 
-## 配置
+## Configuration
 
-### 全局配置
+### Global Config
 
-位置: `~/.ctm/config.yaml`
+Location: `~/.ctm/config.yaml`
 
 ```yaml
 storage:
@@ -302,9 +302,9 @@ logging:
   output: ~/.ctm/events.jsonl
 ```
 
-### Claude Code 权限配置
+### Claude Code Permission Config
 
-在 `~/.claude/settings.json` 中配置自动批准:
+Configure auto-approve in `~/.claude/settings.json`:
 
 ```json
 {
@@ -319,148 +319,148 @@ logging:
 
 ---
 
-## 生产环境部署
+## Production Deployment
 
-### 启动脚本
+### Startup Script
 
 ```bash
 #!/bin/bash
 # start-ctm.sh
 
-# 1. 清理残留资源
+# 1. Cleanup residual resources
 ctm cleanup
 
-# 2. 启动 TUI
+# 2. Launch TUI
 ctm tui
 
-# 3. 退出时自动清理
+# 3. Auto cleanup on exit
 trap 'ctm cleanup' EXIT
 ```
 
-### 定时清理 (Cron)
+### Scheduled Cleanup (Cron)
 
 ```bash
-# 每小时清理超时任务
+# Cleanup hourly
 0 * * * * ctm cleanup >> /var/log/ctm-cleanup.log 2>&1
 ```
 
-### 健康检查
+### Health Check
 
 ```bash
 #!/bin/bash
 # health-check.sh
 
-# 检查残留 session
+# Check residual sessions
 TMUX_SESSIONS=$(tmux list-sessions 2>/dev/null | grep "ctm-" | wc -l)
 if [ "$TMUX_SESSIONS" -gt 0 ]; then
-    echo "WARNING: $TMUX_SESSIONS 个残留 tmux session"
+    echo "WARNING: $TMUX_SESSIONS residual tmux sessions"
 fi
 
-# 检查残留容器
+# Check residual containers
 DOCKER_CONTAINERS=$(docker ps --filter "name=ctm-" -q | wc -l)
 if [ "$DOCKER_CONTAINERS" -gt 0 ]; then
-    echo "WARNING: $DOCKER_CONTAINERS 个残留容器"
+    echo "WARNING: $DOCKER_CONTAINERS residual containers"
 fi
 ```
 
 ---
 
-## 项目结构
+## Project Structure
 
 ```
 claude-task-manager/
-├── cmd/                    # CLI 命令
-│   ├── main.go            # 入口
-│   ├── batch.go           # 批量命令
-│   ├── cleanup.go         # 清理命令
-│   └── tui.go             # TUI 命令
+├── cmd/                    # CLI commands
+│   ├── main.go            # Entry point
+│   ├── batch.go           # Batch commands
+│   ├── cleanup.go         # Cleanup commands
+│   └── tui.go             # TUI commands
 ├── internal/
-│   ├── batch/             # 批量执行引擎
-│   ├── claude/            # Claude 集成
-│   ├── config/            # 配置管理
-│   ├── core/              # 核心引擎
-│   ├── isolation/         # 隔离层
-│   ├── storage/           # 存储层
-│   └── tui/               # 终端界面
-├── pkg/models/            # 领域模型
-├── scripts/               # 辅助脚本
-├── Makefile               # 构建脚本
-└── go.mod                 # Go 模块
+│   ├── batch/             # Batch execution engine
+│   ├── claude/            # Claude integration
+│   ├── config/            # Configuration
+│   ├── core/              # Core engine
+│   ├── isolation/         # Isolation layer
+│   ├── storage/           # Storage layer
+│   └── tui/               # Terminal UI
+├── pkg/models/            # Domain models
+├── scripts/               # Helper scripts
+├── Makefile               # Build script
+└── go.mod                 # Go module
 ```
 
 ---
 
-## 技术栈
+## Tech Stack
 
-- **语言**: Go 1.21+
-- **CLI 框架**: Cobra
-- **TUI 框架**: Bubbletea + Lipgloss
-- **存储**: JSON + JSONL
-- **隔离**: tmux / Docker
+- **Language**: Go 1.21+
+- **CLI Framework**: Cobra
+- **TUI Framework**: Bubbletea + Lipgloss
+- **Storage**: JSON + JSONL
+- **Isolation**: tmux / Docker
 
 ---
 
-## 常见问题
+## FAQ
 
-### Q: 如何批量生成代码?
+### Q: How to batch generate code?
 ```bash
-ctm batch run -p "生成一个 TODO 应用" -n 10 --auto-permission
+ctm batch run -p "Generate a TODO app" -n 10 --auto-permission
 ```
 
-### Q: 任务卡住了怎么办?
+### Q: Task stuck怎么办?
 ```bash
-# 停止指定任务
+# Stop specific task
 ctm task stop <task-id>
 
-# 或清理所有资源
+# Or cleanup all resources
 ctm cleanup
 ```
 
-### Q: 如何查看任务日志?
+### Q: How to view task logs?
 ```bash
-# 实时查看事件
+# Real-time events
 tail -f ~/.ctm/events.jsonl | jq .
 
-# 查看特定任务
+# Specific task
 grep 'task-id' ~/.ctm/events.jsonl
 ```
 
-### Q: Docker 隔离启动失败?
+### Q: Docker isolation fails?
 ```bash
-# 确保 Docker 正在运行
+# Ensure Docker is running
 docker ps
 
-# 使用 tmux 模式
-ctm batch run -p "任务" --isolation tmux
+# Use tmux mode instead
+ctm batch run -p "task" --isolation tmux
 ```
 
 ---
 
-## 更新日志
+## Changelog
 
 ### v1.0.0 (2026-04-13)
-- ✅ 初始版本发布
-- ✅ 多任务并行执行
-- ✅ TUI 实时界面
-- ✅ tmux/Docker 隔离
-- ✅ 批量执行自动化
-- ✅ 权限自动批准
-- ✅ 自动资源清理
+- ✅ Initial release
+- ✅ Multi-task parallel execution
+- ✅ TUI real-time interface
+- ✅ tmux/Docker isolation
+- ✅ Batch execution automation
+- ✅ Auto permission approval
+- ✅ Auto resource cleanup
 
 ---
 
-## 许可证
+## License
 
 MIT License
 
 ---
 
-## 贡献
+## Contributing
 
-欢迎提交 Issue 和 Pull Request！
+Issues and Pull Requests are welcome!
 
 ---
 
-**开发者**: 小梁子  
+**Developer**: 小梁子 (xiaoliangzi)  
 **GitHub**: https://github.com/lzyiioo/claude-task-manager  
-**版本**: 1.0.0
+**Version**: 1.0.0
